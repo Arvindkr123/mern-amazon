@@ -1,36 +1,18 @@
 import React from 'react';
-import data from './constants/data';
+import { Link, Route, Routes } from 'react-router-dom';
+import { HomeScreen, ProductScreen } from './screens';
 
 const App = () => {
   return (
     <div>
       <header>
-        <a href="/">amazona</a>
+        <Link to="/">amazona</Link>
       </header>
       <main>
-        <h1>Featured Products</h1>
-        <div className="products">
-          {data.products &&
-            data.products.length > 0 &&
-            data.products.map((product) => {
-              return (
-                <div key={product.slug} className="product">
-                  <a href={`/product/${product.slug}`}>
-                    <img src={product.image} alt="product image" />
-                  </a>
-                  <div className="product-info">
-                    <a href={`/product/${product.slug}`}>
-                      <p>{product.name}</p>
-                    </a>
-                    <p>
-                      <strong>RS. {product.price}</strong>
-                    </p>
-                    <button>Add to cart</button>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
+        <Routes>
+          <Route path="/product/:slug" element={<ProductScreen />} />
+          <Route path="/" element={<HomeScreen />} />
+        </Routes>
       </main>
     </div>
   );
