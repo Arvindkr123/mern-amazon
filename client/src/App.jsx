@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import { HomeScreen, ProductScreen } from './screens';
+import { HomeScreen, ProductScreen, CartScreen} from './screens';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -41,7 +41,7 @@ const App = () => {
           <Routes>
             <Route path="/product/:slug" element={<ProductScreen />} />
             <Route path="/" element={<HomeScreen />} />
-            <Route path="/cart" element={<h1>Cart Page</h1>} />
+            <Route path="/cart" element={<CartScreen />} />
           </Routes>
         </Container>
       </main>

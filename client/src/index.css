@@ -25,7 +25,7 @@ main {
   flex: 1;
 }
 
-.large-img{
+.large-img {
   max-width: 100%;
 }
 
@@ -35,5 +35,6 @@ main {
   justify-content: center;
 }
 
-
-
+.img-thumbnail {
+  height: 80px !important;
+}

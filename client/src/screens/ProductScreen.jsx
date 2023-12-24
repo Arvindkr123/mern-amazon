@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -35,6 +35,7 @@ const reducer = (state, action) => {
 };
 
 const ProductScreen = () => {
+  const navigate = useNavigate();
   const { slug } = useParams();
   const {
     state: {
@@ -86,6 +87,7 @@ const ProductScreen = () => {
       type: 'ADD_TO_CART',
       payload: { ...item, quantity: quantity },
     });
+    navigate("/cart")
   };
 
   return (
