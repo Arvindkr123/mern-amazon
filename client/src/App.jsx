@@ -28,7 +28,7 @@ const App = () => {
                 Cart
                 {cartItems.length > 0 && (
                   <Badge pill bg="danger">
-                    {cartItems.length}
+                    {cartItems.reduce((a, c) => a + c.quantity, 0)}
                   </Badge>
                 )}
               </Link>
