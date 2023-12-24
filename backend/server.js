@@ -1,16 +1,20 @@
 import express from 'express';
 import data from './data.js';
-// import dotenv from 'dotenv';
-// import cors from 'cors';
-// dotenv.config();
 
 const app = express();
 
-// // Apply the cors middleware
-// app.use(cors());
-
 app.get('/api/products', (req, res) => {
   res.send(data);
+});
+
+app.get('/api/products/slug/:slug', (req, res) => {
+  console.log(req.params);
+  const product = data.find((ele) => ele.slug === req.params.slug);
+  if (product) {
+    res.status(202).send(product);
+  } else {
+    res.status(404).send({ msg: 'product not found' });
+  }
 });
 
 const PORT = process.env.PORT || 5000;

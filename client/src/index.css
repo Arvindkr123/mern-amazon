@@ -16,8 +16,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #ffc000;
-  color: black;
+  background-color: #ffc000 !important;
+  color: black !important;
 }
 
 main {
@@ -25,6 +25,9 @@ main {
   flex: 1;
 }
 
+.large-img{
+  max-width: 100%;
+}
 
 .products {
   display: flex;
