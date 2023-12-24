@@ -10,6 +10,8 @@ import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Rating from '../component/Rating';
 import { Helmet } from 'react-helmet-async';
+import Loading from '../component/Loading';
+import MessageBox from '../component/MessageBox';
 
 const type = {
   fetchRequest: 'FETCH_REQUEST',
@@ -53,11 +55,15 @@ const ProductScreen = () => {
   }, [slug]);
 
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>error...</div>;
+    return <MessageBox variant="danger">error...</MessageBox>;
   }
 
   return (

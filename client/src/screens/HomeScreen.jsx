@@ -1,11 +1,12 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import logger from 'use-reducer-logger';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Product from '../component/Product';
 import { Helmet } from 'react-helmet-async';
+import Loading from '../component/Loading';
+import Container from 'react-bootstrap/Container';
+import MessageBox from '../component/MessageBox';
 
 const type = {
   fetchRequest: 'FETCH_REQUEST',
@@ -56,7 +57,7 @@ const HomeScreen = () => {
         </Helmet>
         <h1>Featured Products</h1>
         <div className="products">
-          <p>Loading.....</p>
+          <Loading />
         </div>
       </>
     );
@@ -70,7 +71,7 @@ const HomeScreen = () => {
         </Helmet>
         <h1>Featured Products</h1>
         <div className="products">
-          <p>{error}</p>
+          <MessageBox variant={'danger'}>{error.message}</MessageBox>
         </div>
       </>
     );
