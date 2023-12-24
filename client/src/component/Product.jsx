@@ -3,8 +3,31 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Rating from './Rating';
+import { useStoreContext } from '../store';
+import axios from 'axios';
 
 const Product = ({ product }) => {
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    dispatch: storeDispatch,
+  } = useStoreContext();
+
+  const addToCartHandler = async (item) => {
+    const existingItem = cartItems.find((ele) => ele._id === item._id);
+    const quantity = existingItem ? existingItem.quantity + 1 : 1;
+
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry, Product is out of stock');
+      return;
+    }
+    storeDispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...item, quantity: quantity },
+    });
+  };
   return (
     <>
       <Card>
@@ -23,6 +46,7 @@ const Product = ({ product }) => {
             <Button
               style={{ backgroundColor: '#ffc000', color: 'black' }}
               className="btn-primary"
+              onClick={() => addToCartHandler(product)}
             >
               Add to cart
             </Button>

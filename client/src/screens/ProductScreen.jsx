@@ -12,6 +12,7 @@ import Rating from '../component/Rating';
 import { Helmet } from 'react-helmet-async';
 import Loading from '../component/Loading';
 import MessageBox from '../component/MessageBox';
+import { useStoreContext } from '../store';
 
 const type = {
   fetchRequest: 'FETCH_REQUEST',
@@ -35,6 +36,12 @@ const reducer = (state, action) => {
 
 const ProductScreen = () => {
   const { slug } = useParams();
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    dispatch: storeDispatch,
+  } = useStoreContext();
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
@@ -65,6 +72,21 @@ const ProductScreen = () => {
   if (error) {
     return <MessageBox variant="danger">error...</MessageBox>;
   }
+
+  const addToCartHandler = async (item) => {
+    const existingItem = cartItems.find((ele) => ele._id === item._id);
+    const quantity = existingItem ? existingItem.quantity + 1 : 1;
+
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry, Product is out of stock');
+      return;
+    }
+    storeDispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...item, quantity: quantity },
+    });
+  };
 
   return (
     <Container>
@@ -114,7 +136,12 @@ const ProductScreen = () => {
                 {product.countInStock > 1 && (
                   <ListGroup.Item>
                     <div className="d-grid">
-                      <Button className="btn-primary">Add to cart</Button>
+                      <Button
+                        onClick={() => addToCartHandler(product)}
+                        className="btn-primary"
+                      >
+                        Add to cart
+                      </Button>
                     </div>
                   </ListGroup.Item>
                 )}

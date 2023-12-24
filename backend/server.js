@@ -8,8 +8,18 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/products/slug/:slug', (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
   const product = data.find((ele) => ele.slug === req.params.slug);
+  if (product) {
+    res.status(202).send(product);
+  } else {
+    res.status(404).send({ msg: 'product not found' });
+  }
+});
+
+app.get('/api/products/:id', (req, res) => {
+  console.log(req.params);
+  const product = data.find((ele) => ele._id === +req.params.id);
   if (product) {
     res.status(202).send(product);
   } else {

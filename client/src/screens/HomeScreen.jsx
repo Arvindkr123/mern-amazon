@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Product from '../component/Product';
 import { Helmet } from 'react-helmet-async';
 import Loading from '../component/Loading';
-import Container from 'react-bootstrap/Container';
 import MessageBox from '../component/MessageBox';
 
 const type = {
