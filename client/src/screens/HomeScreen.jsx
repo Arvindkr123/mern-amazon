@@ -2,6 +2,9 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from '../component/Product';
 
 const type = {
   fetchRequest: 'FETCH_REQUEST',
@@ -69,26 +72,17 @@ const HomeScreen = () => {
     <>
       <h1>Featured Products</h1>
       <div className="products">
-        {products &&
-          products.length > 0 &&
-          products.map((product) => {
-            return (
-              <div key={product.slug} className="product">
-                <Link to={`/product/${product.slug}`}>
-                  <img src={product.image} alt="product image" />
-                </Link>
-                <div className="product-info">
-                  <Link to={`/product/${product.slug}`}>
-                    <p>{product.name}</p>
-                  </Link>
-                  <p>
-                    <strong>RS. {product.price}</strong>
-                  </p>
-                  <button>Add to cart</button>
-                </div>
-              </div>
-            );
-          })}
+        <Row>
+          {products &&
+            products.length > 0 &&
+            products.map((product) => {
+              return (
+                <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                  <Product product={product} />
+                </Col>
+              );
+            })}
+        </Row>
       </div>
     </>
   );
