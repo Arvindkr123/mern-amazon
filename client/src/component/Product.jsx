@@ -45,14 +45,20 @@ const Product = ({ product }) => {
             <Card.Text>
               <strong>RS. {product.price}</strong>
             </Card.Text>
-            <Button
-              style={{ backgroundColor: '#ffc000', color: 'black' }}
-              className="btn-primary"
-              onClick={() => addToCartHandler(product)}
-            >
-              Add to cart
-            </Button>
-          </>
+            {product.countInStock === 0 ? (
+              <Button variant="light" disabled>
+                Out of Stock
+              </Button>
+            ) : (
+              <Button
+                style={{ backgroundColor: '#ffc000', color: 'black' }}
+                className="btn-primary"
+                onClick={() => addToCartHandler(product)}
+              >
+                Add to cart
+              </Button>
+            )}
+          </> 
         </Card.Body>
       </Card>
     </>
