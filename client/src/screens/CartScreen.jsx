@@ -4,13 +4,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useStoreContext } from '../store';
 import MessageBox from '../component/MessageBox';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
 const CartScreen = () => {
+  const navigate = useNavigate();
   const {
     state: {
       cart: { cartItems },
@@ -31,7 +32,9 @@ const CartScreen = () => {
     dispatch({ type: 'REMOVE_TO_CART', payload: item._id });
   };
 
-  const chcekoutHandler = () => {};
+  const chcekoutHandler = () => {
+    navigate(`/signin?redirect=/shipping`);
+  };
   return (
     <div>
       <Helmet>
