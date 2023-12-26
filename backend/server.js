@@ -1,31 +1,23 @@
 import express from 'express';
-import data from './data.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoute.js';
 
+dotenv.config();
 const app = express();
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('Connected to Mongoose Database');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-app.get('/api/products', (req, res) => {
-  res.send(data);
-});
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
 
-app.get('/api/products/slug/:slug', (req, res) => {
-  // console.log(req.params);
-  const product = data.find((ele) => ele.slug === req.params.slug);
-  if (product) {
-    res.status(202).send(product);
-  } else {
-    res.status(404).send({ msg: 'product not found' });
-  }
-});
-
-app.get('/api/products/:id', (req, res) => {
-  // console.log(req.params);
-  const product = data.find((ele) => ele._id === +req.params.id);
-  if (product) {
-    res.status(202).send(product);
-  } else {
-    res.status(404).send({ msg: 'product not found' });
-  }
-});
 
 const PORT = process.env.PORT || 5000;
 
